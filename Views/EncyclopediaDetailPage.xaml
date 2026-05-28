@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TasteNote.Views.EncyclopediaDetailPage"
+             xmlns:viewmodel="clr-namespace:TasteNote.ViewModels"
+             x:DataType="viewmodel:EncyclopediaDetailViewModel"
+             Title="饮品详情"
+             BackgroundColor="{StaticResource Background}">
+
+    <Grid RowDefinitions="*,Auto">
+
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Spacing="0">
+
+                <!-- Top Image Area -->
+                <Grid HeightRequest="250"
+                      x:Name="ImageArea">
+                    <!-- Placeholder -->
+                    <Border BackgroundColor="#E0E0E0"
+                            StrokeShape="RoundRectangle 0,0,24,24"
+                            HorizontalOptions="Fill"
+                            VerticalOptions="Fill">
+                        <Label Text="暂无图片"
+                               FontSize="14"
+                               TextColor="{StaticResource TextSecondary}"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center" />
+                    </Border>
+
+                    <!-- Actual Image -->
+                    <Image Source="{Binding ImageUrl}"
+                           Aspect="AspectFill"
+                           HorizontalOptions="Fill"
+                           VerticalOptions="Fill" />
+
+                    <!-- Back Button -->
+                    <Border BackgroundColor="#80000000"
+                            StrokeShape="RoundRectangle 20"
+                            WidthRequest="40"
+                            HeightRequest="40"
+                            HorizontalOptions="Start"
+                            VerticalOptions="Start"
+                            Margin="16,40,0,0">
+                        <Label Text="←"
+                               FontSize="20"
+                               TextColor="White"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center" />
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding GoBackCommand}" />
+                        </Border.GestureRecognizers>
+                    </Border>
+                </Grid>
+
+                <!-- Content -->
+                <VerticalStackLayout Padding="20,20,20,0"
+                                     Spacing="16">
+
+                    <!-- Name + Category -->
+                    <Grid ColumnDefinitions="*,Auto"
+                          ColumnSpacing="12">
+                        <Label Grid.Column="0"
+                               Text="{Binding Name}"
+                               FontSize="24"
+                               FontAttributes="Bold"
+                               TextColor="{StaticResource TextPrimary}"
+                               LineBreakMode="WordWrap" />
+                        <Border Grid.Column="1"
+                                BackgroundColor="{StaticResource PrimaryLight}"
+                                StrokeShape="RoundRectangle 10"
+                                Padding="10,4"
+                                VerticalOptions="Center">
+                            <Label Text="{Binding Category}"
+                                   FontSize="12"
+                                   TextColor="{StaticResource Primary}" />
+                        </Border>
+                    </Grid>
+
+                    <!-- Origin -->
+                    <HorizontalStackLayout Spacing="6">
+                        <Label Text="📍"
+                               FontSize="16"
+                               VerticalOptions="Center" />
+                        <Label Text="{Binding Origin}"
+                               FontSize="14"
+                               TextColor="{StaticResource TextSecondary}"
+                               VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+
+                    <!-- Divider -->
+                    <BoxView HeightRequest="1"
+                             BackgroundColor="{StaticResource PrimaryLight}"
+                             Margin="0,4" />
+
+                    <!-- Flavor Radar (Simple Bar Style) -->
+                    <VerticalStackLayout Spacing="8">
+                        <Label Text="风味特征"
+                               FontSize="16"
+                               FontAttributes="Bold"
+                               TextColor="{StaticResource TextPrimary}" />
+
+                        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto"
+                              ColumnDefinitions="40,*,40"
+                              RowSpacing="10">
+                            <!-- 甜 -->
+                            <Label Grid.Row="0" Grid.Column="0"
+                                   Text="甜" FontSize="14" TextColor="{StaticResource TextPrimary}"
+                                   HorizontalOptions="Center" VerticalOptions="Center" />
+                            <ProgressBar Grid.Row="0" Grid.Column="1"
+                                         Progress="{Binding Sweetness}"
+                                         ProgressColor="{StaticResource Primary}"
+                                         VerticalOptions="Center"
+                                         HeightRequest="8" />
+                            <Label Grid.Row="0" Grid.Column="2"
+                                   Text="{Binding SweetnessText}" FontSize="12"
+                                   TextColor="{StaticResource TextSecondary}"
+                                   HorizontalOptions="Center" VerticalOptions="Center" />
+
+                            <!-- 苦 -->
+                            <Label Grid.Row="1" Grid.Column="0"
+                                   Text="苦" FontSize="14" TextColor="{StaticResource TextPrimary}"
+                                   HorizontalOptions="Center" VerticalOptions="Center" />
+                            <ProgressBar Grid.Row="1" Grid.Column="1"
+                                         Progress="{Binding Bitterness}"
+                                         ProgressColor="{StaticResource Primary}"
+                                         VerticalOptions="Center"
+                                         HeightRequest="8" />
+                            <Label Grid.Row="1" Grid.Column="2"
+                                   Text="{Binding BitternessText}" FontSize="12"
+                                   TextColor="{StaticResource TextSecondary}"
+                                   HorizontalOptions="Center" VerticalOptions="Center" />
+
+                            <!-- 酸 -->
+                            <Label Grid.Row="2" Grid.Column="0"
+                                   Text="酸" FontSize="14" TextColor="{StaticResource TextPrimary}"
+                                   HorizontalOptions="Center" VerticalOptions="Center" />
+                            <ProgressBar Grid.Row="2" Grid.Column="1"
+                                         Progress="{Binding Sourness}"
+                                         ProgressColor="{StaticResource Primary}"
+                                         VerticalOptions="Center"
+                                         HeightRequest="8" />
+                            <Label Grid.Row="2" Grid.Column="2"
+                                   Text="{Binding SournessText}" FontSize="12"
+                                   TextColor="{StaticResource TextSecondary}"
+                                   HorizontalOptions="Center" VerticalOptions="Center" />
+
+                            <!-- 香 -->
+                            <Label Grid.Row="3" Grid.Column="0"
+                                   Text="香" FontSize="14" TextColor="{StaticResource TextPrimary}"
+                                   HorizontalOptions="Center" VerticalOptions="Center" />
+                            <ProgressBar Grid.Row="3" Grid.Column="1"
+                                         Progress="{Binding Aroma}"
+                                         ProgressColor="{StaticResource Primary}"
+                                         VerticalOptions="Center"
+                                         HeightRequest="8" />
+                            <Label Grid.Row="3" Grid.Column="2"
+                                   Text="{Binding AromaText}" FontSize="12"
+                                   TextColor="{StaticResource TextSecondary}"
+                                   HorizontalOptions="Center" VerticalOptions="Center" />
+
+                            <!-- 醇 -->
+                            <Label Grid.Row="4" Grid.Column="0"
+                                   Text="醇" FontSize="14" TextColor="{StaticResource TextPrimary}"
+                                   HorizontalOptions="Center" VerticalOptions="Center" />
+                            <ProgressBar Grid.Row="4" Grid.Column="1"
+                                         Progress="{Binding Body}"
+                                         ProgressColor="{StaticResource Primary}"
+                                         VerticalOptions="Center"
+                                         HeightRequest="8" />
+                            <Label Grid.Row="4" Grid.Column="2"
+                                   Text="{Binding BodyText}" FontSize="12"
+                                   TextColor="{StaticResource TextSecondary}"
+                                   HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Grid>
+                    </VerticalStackLayout>
+
+                    <!-- Divider -->
+                    <BoxView HeightRequest="1"
+                             BackgroundColor="{StaticResource PrimaryLight}"
+                             Margin="0,4" />
+
+                    <!-- Story Section -->
+                    <VerticalStackLayout Spacing="8"
+                                          x:Name="StorySection">
+                        <Grid ColumnDefinitions="*,Auto"
+                              ColumnSpacing="8">
+                            <Label Grid.Column="0"
+                                   Text="文化故事"
+                                   FontSize="16"
+                                   FontAttributes="Bold"
+                                   TextColor="{StaticResource TextPrimary}"
+                                   VerticalOptions="Center" />
+                            <Button Grid.Column="1"
+                                    Text="{Binding StoryButtonText}"
+                                    FontSize="12"
+                                    Padding="8,4"
+                                    BackgroundColor="{StaticResource PrimaryLight}"
+                                    TextColor="{StaticResource Primary}"
+                                    CornerRadius="8"
+                                    Command="{Binding ToggleStoryCommand}"
+                                    AutomationId="ToggleStoryButton" />
+                        </Grid>
+
+                        <Label Text="{Binding Story}"
+                               FontSize="14"
+                               TextColor="{StaticResource TextPrimary}"
+                               LineHeight="1.6"
+                               LineBreakMode="WordWrap"
+                               MaxLines="{Binding StoryMaxLines}"
+                               IsVisible="{Binding HasStory}" />
+
+                        <Button Text="🔊 朗读故事"
+                                FontSize="13"
+                                Padding="12,6"
+                                BackgroundColor="{StaticResource PrimaryLight}"
+                                TextColor="{StaticResource Primary}"
+                                CornerRadius="10"
+                                HorizontalOptions="Start"
+                                Command="{Binding ReadStoryCommand}"
+                                AutomationId="TTSStoryButton"
+                                SemanticProperties.Hint="朗读文化故事"
+                                IsVisible="{Binding HasStory}" />
+                    </VerticalStackLayout>
+
+                    <!-- Divider -->
+                    <BoxView HeightRequest="1"
+                             BackgroundColor="{StaticResource PrimaryLight}"
+                             Margin="0,4"
+                             IsVisible="{Binding HasBrewMethod}" />
+
+                    <!-- Brew Method -->
+                    <VerticalStackLayout Spacing="8"
+                                          IsVisible="{Binding HasBrewMethod}">
+                        <Label Text="制作方法"
+                               FontSize="16"
+                               FontAttributes="Bold"
+                               TextColor="{StaticResource TextPrimary}" />
+
+                        <BindableLayout.ItemsSource>
+                            <x:Array Type="{x:Type x:String}">
+                                <x:String>步骤示例1</x:String>
+                            </x:Array>
+                        </BindableLayout.ItemsSource>
+
+                        <!-- Brew Steps -->
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding BrewSteps}"
+                                             Spacing="0">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="x:String">
+                                    <VerticalStackLayout Spacing="0">
+                                        <Grid ColumnDefinitions="32,*"
+                                              ColumnSpacing="12"
+                                              Padding="0,10">
+                                            <!-- Step Number -->
+                                            <Border BackgroundColor="{StaticResource Primary}"
+                                                    StrokeShape="RoundRectangle 12"
+                                                    WidthRequest="24"
+                                                    HeightRequest="24"
+                                                    HorizontalOptions="Center"
+                                                    VerticalOptions="Start">
+                                                <Label Text="{Binding StepNumber}"
+                                                       FontSize="11"
+                                                       FontAttributes="Bold"
+                                                       TextColor="{StaticResource Surface}"
+                                                       HorizontalOptions="Center"
+                                                       VerticalOptions="Center" />
+                                            </Border>
+
+                                            <!-- Step Text -->
+                                            <Label Grid.Column="1"
+                                                   Text="{Binding Description}"
+                                                   FontSize="14"
+                                                   TextColor="{StaticResource TextPrimary}"
+                                                   LineHeight="1.5"
+                                                   VerticalOptions="Center" />
+                                        </Grid>
+
+                                        <!-- Divider -->
+                                        <BoxView HeightRequest="1"
+                                                 BackgroundColor="{StaticResource PrimaryLight}"
+                                                 Margin="44,0,0,0"
+                                                 Opacity="0.5" />
+                                    </VerticalStackLayout>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+
+                    <!-- Spacer for bottom bar -->
+                    <BoxView HeightRequest="80"
+                             BackgroundColor="Transparent" />
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Bottom Action Bar -->
+        <Border Grid.Row="1"
+                BackgroundColor="{StaticResource Surface}"
+                StrokeShape="RoundRectangle 20,20,0,0"
+                Padding="16,12,16,20"
+                HorizontalOptions="Fill"
+                VerticalOptions="End">
+            <Border.Shadow>
+                <Shadow Brush="{StaticResource TextSecondary}"
+                        Offset="0,-4"
+                        Radius="12"
+                        Opacity="0.1" />
+            </Border.Shadow>
+
+            <Grid ColumnDefinitions="*,*"
+                  ColumnSpacing="12">
+                <Button x:Name="ReadStoryBtn"
+                        Text="🔊 朗读故事"
+                        FontSize="14"
+                        TextColor="{StaticResource Primary}"
+                        BackgroundColor="{StaticResource PrimaryLight}"
+                        CornerRadius="12"
+                        Command="{Binding ReadStoryCommand}"
+                        AutomationId="ReadStoryButton"
+                        SemanticProperties.Hint="朗读文化故事" />
+
+                <Button x:Name="RecordBtn"
+                        Grid.Column="1"
+                        Text="📝 记录品鉴"
+                        FontSize="14"
+                        FontAttributes="Bold"
+                        TextColor="{StaticResource Surface}"
+                        BackgroundColor="{StaticResource Primary}"
+                        CornerRadius="12"
+                        Command="{Binding RecordTastingCommand}"
+                        AutomationId="RecordTastingButton"
+                        SemanticProperties.Hint="开始记录品鉴" />
+            </Grid>
+        </Border>
+    </Grid>
+</ContentPage>

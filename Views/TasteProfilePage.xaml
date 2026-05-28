@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TasteNote.Views.TasteProfilePage"
+             xmlns:viewmodel="clr-namespace:TasteNote.ViewModels"
+             x:DataType="viewmodel:TasteProfileViewModel"
+             Title="口味档案"
+             BackgroundColor="{StaticResource Background}">
+
+    <ScrollView Padding="16,8"
+                VerticalOptions="Fill">
+        <VerticalStackLayout Spacing="16">
+
+            <!-- Back Button -->
+            <HorizontalStackLayout>
+                <Button Text="← 返回"
+                        FontSize="14"
+                        BackgroundColor="Transparent"
+                        TextColor="{StaticResource Primary}"
+                        Command="{Binding GoBackCommand}"
+                        AutomationId="BackButton"
+                        SemanticProperties.Hint="返回上一页" />
+            </HorizontalStackLayout>
+
+            <!-- Title -->
+            <Label Text="口味档案"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   TextColor="{StaticResource TextPrimary}" />
+
+            <!-- Radar / Flavor Bars Card -->
+            <Border StrokeShape="RoundRectangle 12"
+                    BackgroundColor="{StaticResource Surface}"
+                    Stroke="{StaticResource Gray200}"
+                    Padding="16">
+                <Border.Shadow>
+                    <Shadow Brush="{StaticResource Gray200}"
+                            Offset="0,2"
+                            Radius="8"
+                            Opacity="0.3" />
+                </Border.Shadow>
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="口味维度"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource TextPrimary}" />
+
+                    <!-- Sweet -->
+                    <Grid ColumnDefinitions="40,*,40"
+                          ColumnSpacing="8"
+                          VerticalOptions="Center">
+                        <Label Text="甜"
+                               FontSize="14"
+                               TextColor="{StaticResource TextPrimary}"
+                               VerticalOptions="Center" />
+                        <ProgressBar Grid.Column="1"
+                                     Progress="{Binding SweetScore}"
+                                     ProgressColor="{StaticResource FlavorSweet}"
+                                     VerticalOptions="Center"
+                                     HeightRequest="8" />
+                        <Label Grid.Column="2"
+                               Text="{Binding SweetScore, StringFormat='{0:F1}'}"
+                               FontSize="12"
+                               TextColor="{StaticResource TextSecondary}"
+                               VerticalOptions="Center"
+                               HorizontalOptions="End" />
+                    </Grid>
+
+                    <!-- Sour -->
+                    <Grid ColumnDefinitions="40,*,40"
+                          ColumnSpacing="8"
+                          VerticalOptions="Center">
+                        <Label Text="酸"
+                               FontSize="14"
+                               TextColor="{StaticResource TextPrimary}"
+                               VerticalOptions="Center" />
+                        <ProgressBar Grid.Column="1"
+                                     Progress="{Binding SourScore}"
+                                     ProgressColor="{StaticResource FlavorSour}"
+                                     VerticalOptions="Center"
+                                     HeightRequest="8" />
+                        <Label Grid.Column="2"
+                               Text="{Binding SourScore, StringFormat='{0:F1}'}"
+                               FontSize="12"
+                               TextColor="{StaticResource TextSecondary}"
+                               VerticalOptions="Center"
+                               HorizontalOptions="End" />
+                    </Grid>
+
+                    <!-- Bitter -->
+                    <Grid ColumnDefinitions="40,*,40"
+                          ColumnSpacing="8"
+                          VerticalOptions="Center">
+                        <Label Text="苦"
+                               FontSize="14"
+                               TextColor="{StaticResource TextPrimary}"
+                               VerticalOptions="Center" />
+                        <ProgressBar Grid.Column="1"
+                                     Progress="{Binding BitterScore}"
+                                     ProgressColor="{StaticResource FlavorBitter}"
+                                     VerticalOptions="Center"
+                                     HeightRequest="8" />
+                        <Label Grid.Column="2"
+                               Text="{Binding BitterScore, StringFormat='{0:F1}'}"
+                               FontSize="12"
+                               TextColor="{StaticResource TextSecondary}"
+                               VerticalOptions="Center"
+                               HorizontalOptions="End" />
+                    </Grid>
+
+                    <!-- Salty -->
+                    <Grid ColumnDefinitions="40,*,40"
+                          ColumnSpacing="8"
+                          VerticalOptions="Center">
+                        <Label Text="咸"
+                               FontSize="14"
+                               TextColor="{StaticResource TextPrimary}"
+                               VerticalOptions="Center" />
+                        <ProgressBar Grid.Column="1"
+                                     Progress="{Binding SaltyScore}"
+                                     ProgressColor="{StaticResource FlavorSalty}"
+                                     VerticalOptions="Center"
+                                     HeightRequest="8" />
+                        <Label Grid.Column="2"
+                               Text="{Binding SaltyScore, StringFormat='{0:F1}'}"
+                               FontSize="12"
+                               TextColor="{StaticResource TextSecondary}"
+                               VerticalOptions="Center"
+                               HorizontalOptions="End" />
+                    </Grid>
+
+                    <!-- Umami -->
+                    <Grid ColumnDefinitions="40,*,40"
+                          ColumnSpacing="8"
+                          VerticalOptions="Center">
+                        <Label Text="鲜"
+                               FontSize="14"
+                               TextColor="{StaticResource TextPrimary}"
+                               VerticalOptions="Center" />
+                        <ProgressBar Grid.Column="1"
+                                     Progress="{Binding UmamiScore}"
+                                     ProgressColor="{StaticResource FlavorUmami}"
+                                     VerticalOptions="Center"
+                                     HeightRequest="8" />
+                        <Label Grid.Column="2"
+                               Text="{Binding UmamiScore, StringFormat='{0:F1}'}"
+                               FontSize="12"
+                               TextColor="{StaticResource TextSecondary}"
+                               VerticalOptions="Center"
+                               HorizontalOptions="End" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Category Distribution -->
+            <Border StrokeShape="RoundRectangle 12"
+                    BackgroundColor="{StaticResource Surface}"
+                    Stroke="{StaticResource Gray200}"
+                    Padding="16">
+                <Border.Shadow>
+                    <Shadow Brush="{StaticResource Gray200}"
+                            Offset="0,2"
+                            Radius="6"
+                            Opacity="0.25" />
+                </Border.Shadow>
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="品鉴分类分布"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource TextPrimary}" />
+
+                    <!-- Horizontal Bar Chart Rows -->
+                    <CollectionView ItemsSource="{Binding CategoryStats}"
+                                    SelectionMode="None">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="{x:Null}">
+                                <Grid ColumnDefinitions="60,*,40"
+                                      ColumnSpacing="8"
+                                      Margin="0,2"
+                                      VerticalOptions="Center">
+                                    <Label Text="{Binding Category}"
+                                           FontSize="13"
+                                           TextColor="{StaticResource TextPrimary}"
+                                           VerticalOptions="Center" />
+                                    <BoxView Grid.Column="1"
+                                             HeightRequest="16"
+                                             Color="{StaticResource Primary}"
+                                             WidthRequest="{Binding BarWidth}"
+                                             VerticalOptions="Center"
+                                             HorizontalOptions="Start" />
+                                    <Label Grid.Column="2"
+                                           Text="{Binding Count}"
+                                           FontSize="12"
+                                           TextColor="{StaticResource TextSecondary}"
+                                           VerticalOptions="Center"
+                                           HorizontalOptions="End" />
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Monthly Trend -->
+            <Border StrokeShape="RoundRectangle 12"
+                    BackgroundColor="{StaticResource Surface}"
+                    Stroke="{StaticResource Gray200}"
+                    Padding="16">
+                <Border.Shadow>
+                    <Shadow Brush="{StaticResource Gray200}"
+                            Offset="0,2"
+                            Radius="6"
+                            Opacity="0.25" />
+                </Border.Shadow>
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="品鉴趋势"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource TextPrimary}" />
+
+                    <!-- Bar Chart -->
+                    <CollectionView ItemsSource="{Binding MonthlyStats}"
+                                    SelectionMode="None">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="{x:Null}">
+                                <Grid ColumnDefinitions="40,*,30"
+                                      ColumnSpacing="8"
+                                      Margin="0,2"
+                                      VerticalOptions="Center">
+                                    <Label Text="{Binding Month}"
+                                           FontSize="12"
+                                           TextColor="{StaticResource TextSecondary}"
+                                           VerticalOptions="Center" />
+                                    <BoxView Grid.Column="1"
+                                             HeightRequest="14"
+                                             Color="{StaticResource StatMonth}"
+                                             WidthRequest="{Binding BarWidth}"
+                                             VerticalOptions="Center"
+                                             HorizontalOptions="Start" />
+                                    <Label Grid.Column="2"
+                                           Text="{Binding Count}"
+                                           FontSize="11"
+                                           TextColor="{StaticResource TextSecondary}"
+                                           VerticalOptions="Center"
+                                           HorizontalOptions="End" />
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Stats Summary -->
+            <Border StrokeShape="RoundRectangle 12"
+                    BackgroundColor="{StaticResource Surface}"
+                    Stroke="{StaticResource Gray200}"
+                    Padding="16">
+                <Border.Shadow>
+                    <Shadow Brush="{StaticResource Gray200}"
+                            Offset="0,2"
+                            Radius="6"
+                            Opacity="0.25" />
+                </Border.Shadow>
+                <Grid ColumnDefinitions="*,*,*,*"
+                      RowDefinitions="Auto,Auto"
+                      RowSpacing="8">
+                    <!-- Total -->
+                    <VerticalStackLayout HorizontalOptions="Center"
+                                         Spacing="4">
+                        <Label Text="{Binding TotalRecords}"
+                               FontSize="24"
+                               FontAttributes="Bold"
+                               TextColor="{StaticResource StatTotal}"
+                               HorizontalOptions="Center" />
+                        <Label Text="总品鉴次数"
+                               FontSize="11"
+                               TextColor="{StaticResource TextSecondary}"
+                               HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                    <!-- Favorite Category -->
+                    <VerticalStackLayout Grid.Column="1"
+                                         HorizontalOptions="Center"
+                                         Spacing="4">
+                        <Label Text="{Binding FavoriteCategory}"
+                               FontSize="16"
+                               FontAttributes="Bold"
+                               TextColor="{StaticResource StatMonth}"
+                               HorizontalOptions="Center" />
+                        <Label Text="最常品鉴分类"
+                               FontSize="11"
+                               TextColor="{StaticResource TextSecondary}"
+                               HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                    <!-- Avg Rating -->
+                    <VerticalStackLayout Grid.Column="2"
+                                         HorizontalOptions="Center"
+                                         Spacing="4">
+                        <Label Text="{Binding AvgRating, StringFormat='{0:F1}'}"
+                               FontSize="24"
+                               FontAttributes="Bold"
+                               TextColor="{StaticResource StatRating}"
+                               HorizontalOptions="Center" />
+                        <Label Text="平均评分"
+                               FontSize="11"
+                               TextColor="{StaticResource TextSecondary}"
+                               HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                    <!-- Place Count -->
+                    <VerticalStackLayout Grid.Column="3"
+                                         HorizontalOptions="Center"
+                                         Spacing="4">
+                        <Label Text="{Binding PlaceCount}"
+                               FontSize="24"
+                               FontAttributes="Bold"
+                               TextColor="{StaticResource StatPlace}"
+                               HorizontalOptions="Center" />
+                        <Label Text="收藏地点数"
+                               FontSize="11"
+                               TextColor="{StaticResource TextSecondary}"
+                               HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </Grid>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

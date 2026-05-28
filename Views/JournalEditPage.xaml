@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TasteNote.Views.JournalEditPage"
+             xmlns:viewmodel="clr-namespace:TasteNote.ViewModels"
+             x:DataType="viewmodel:JournalEditViewModel"
+             Title="记录品鉴"
+             BackgroundColor="{StaticResource Background}">
+
+    <Grid RowDefinitions="*,Auto">
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Padding="20"
+                                 Spacing="20">
+
+                <!-- Image Preview Area -->
+                <Border StrokeShape="RoundRectangle 16"
+                        BackgroundColor="{StaticResource PrimaryLight}"
+                        HeightRequest="150"
+                        HorizontalOptions="Fill"
+                        StrokeThickness="0">
+                    <Grid RowDefinitions="*,Auto">
+                        <!-- Placeholder or Image -->
+                        <Image Source="{Binding ImageUrl}"
+                               Aspect="AspectFill"
+                               HorizontalOptions="Fill"
+                               VerticalOptions="Fill"
+                               IsVisible="{Binding HasImage}" />
+                        <Label Text="📷 添加品鉴照片"
+                               FontSize="16"
+                               TextColor="{StaticResource TextSecondary}"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"
+                               IsVisible="{Binding HasNoImage}" />
+
+                        <!-- Photo Buttons -->
+                        <HorizontalStackLayout Grid.Row="1"
+                                               HorizontalOptions="Center"
+                                               Spacing="12"
+                                               Margin="0,0,0,12">
+                            <Button x:Name="TakePhotoButton"
+                                    Text="📷 拍照"
+                                    FontSize="13"
+                                    Padding="14,8"
+                                    BackgroundColor="{StaticResource Surface}"
+                                    TextColor="{StaticResource Primary}"
+                                    CornerRadius="10"
+                                    Command="{Binding TakePhotoCommand}"
+                                    AutomationId="TakePhotoButton"
+                                    SemanticProperties.Hint="拍照添加图片" />
+                            <Button x:Name="PickPhotoButton"
+                                    Text="🖼 相册"
+                                    FontSize="13"
+                                    Padding="14,8"
+                                    BackgroundColor="{StaticResource Surface}"
+                                    TextColor="{StaticResource Primary}"
+                                    CornerRadius="10"
+                                    Command="{Binding PickPhotoCommand}"
+                                    AutomationId="PickPhotoButton"
+                                    SemanticProperties.Hint="从相册选择图片" />
+                            <Button x:Name="FlashButton"
+                                    Text="⚡ 闪光灯"
+                                    FontSize="13"
+                                    Padding="14,8"
+                                    BackgroundColor="{StaticResource Surface}"
+                                    TextColor="{StaticResource Primary}"
+                                    CornerRadius="10"
+                                    Command="{Binding ToggleFlashCommand}"
+                                    AutomationId="FlashButton"
+                                    SemanticProperties.Hint="切换闪光灯" />
+                        </HorizontalStackLayout>
+                    </Grid>
+                </Border>
+
+                <!-- Title -->
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="品鉴名称"
+                           FontSize="14"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource TextPrimary}" />
+                    <Entry x:Name="TitleEntry"
+                           Text="{Binding Title}"
+                           Placeholder="输入饮品或食物名称"
+                           FontSize="15"
+                           BackgroundColor="{StaticResource Surface}"
+                           Margin="0"
+                           AutomationId="TitleEntry"
+                           SemanticProperties.Hint="输入品鉴名称" />
+                </VerticalStackLayout>
+
+                <!-- Category Picker -->
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="分类"
+                           FontSize="14"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource TextPrimary}" />
+                    <Picker x:Name="CategoryPicker"
+                            ItemsSource="{Binding Categories}"
+                            SelectedItem="{Binding SelectedCategory}"
+                            Title="选择分类"
+                            FontSize="15"
+                            BackgroundColor="{StaticResource Surface}"
+                            AutomationId="CategoryPicker"
+                            SemanticProperties.Hint="选择品鉴分类" />
+                </VerticalStackLayout>
+
+                <!-- Rating -->
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="评分"
+                           FontSize="14"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource TextPrimary}" />
+                    <HorizontalStackLayout Spacing="8"
+                                           x:Name="RatingStars">
+                        <Button Text="{Binding Star1Text}" FontSize="24" Padding="4"
+                                BackgroundColor="Transparent" CornerRadius="4"
+                                Command="{Binding SetRatingCommand}" CommandParameter="1"
+                                AutomationId="Star1" />
+                        <Button Text="{Binding Star2Text}" FontSize="24" Padding="4"
+                                BackgroundColor="Transparent" CornerRadius="4"
+                                Command="{Binding SetRatingCommand}" CommandParameter="2"
+                                AutomationId="Star2" />
+                        <Button Text="{Binding Star3Text}" FontSize="24" Padding="4"
+                                BackgroundColor="Transparent" CornerRadius="4"
+                                Command="{Binding SetRatingCommand}" CommandParameter="3"
+                                AutomationId="Star3" />
+                        <Button Text="{Binding Star4Text}" FontSize="24" Padding="4"
+                                BackgroundColor="Transparent" CornerRadius="4"
+                                Command="{Binding SetRatingCommand}" CommandParameter="4"
+                                AutomationId="Star4" />
+                        <Button Text="{Binding Star5Text}" FontSize="24" Padding="4"
+                                BackgroundColor="Transparent" CornerRadius="4"
+                                Command="{Binding SetRatingCommand}" CommandParameter="5"
+                                AutomationId="Star5" />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+
+                <!-- Flavor Tags -->
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="风味标签"
+                           FontSize="14"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource TextPrimary}" />
+
+                    <!-- Preset Tags Grid -->
+                    <FlexLayout Wrap="Wrap"
+                                AlignItems="Start"
+                                JustifyContent="Start"
+                                BindableLayout.ItemsSource="{Binding PresetFlavorTags}"
+                                x:Name="PresetTagsContainer">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="x:String">
+                                <Border BackgroundColor="{StaticResource AccentLight}"
+                                        StrokeShape="RoundRectangle 10"
+                                        Padding="10,5"
+                                        Margin="0,0,8,6">
+                                    <Label Text="{Binding .}"
+                                           FontSize="13"
+                                           TextColor="{StaticResource Accent}" />
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:JournalEditViewModel}}, Path=ToggleFlavorTagCommand}"
+                                            CommandParameter="{Binding .}" />
+                                    </Border.GestureRecognizers>
+                                </Border>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </FlexLayout>
+
+                    <!-- Selected Tags -->
+                    <FlexLayout Wrap="Wrap"
+                                AlignItems="Start"
+                                JustifyContent="Start"
+                                BindableLayout.ItemsSource="{Binding SelectedFlavorTags}"
+                                x:Name="SelectedTagsContainer"
+                                Margin="0,4,0,0">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="x:String">
+                                <Border BackgroundColor="{StaticResource Primary}"
+                                        StrokeShape="RoundRectangle 10"
+                                        Padding="10,5"
+                                        Margin="0,0,8,6">
+                                    <Grid ColumnDefinitions="*,Auto"
+                                          ColumnSpacing="4">
+                                        <Label Text="{Binding .}"
+                                               FontSize="13"
+                                               TextColor="{StaticResource Surface}" />
+                                        <Label Grid.Column="1"
+                                               Text="✕"
+                                               FontSize="11"
+                                               TextColor="{StaticResource Surface}">
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:JournalEditViewModel}}, Path=RemoveFlavorTagCommand}"
+                                                    CommandParameter="{Binding .}" />
+                                            </Label.GestureRecognizers>
+                                        </Label>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </FlexLayout>
+
+                    <!-- Custom Tag Input -->
+                    <Grid ColumnDefinitions="*,Auto"
+                          ColumnSpacing="8">
+                        <Entry x:Name="CustomTagEntry"
+                               Text="{Binding CustomTagText}"
+                               Placeholder="输入自定义标签"
+                               FontSize="14"
+                               BackgroundColor="{StaticResource Surface}"
+                               ReturnCommand="{Binding AddCustomTagCommand}"
+                               AutomationId="CustomTagEntry"
+                               SemanticProperties.Hint="输入自定义风味标签" />
+                        <Button Grid.Column="1"
+                                Text="添加"
+                                FontSize="13"
+                                Padding="14,8"
+                                BackgroundColor="{StaticResource Primary}"
+                                TextColor="{StaticResource Surface}"
+                                CornerRadius="10"
+                                Command="{Binding AddCustomTagCommand}"
+                                AutomationId="AddTagButton"
+                                SemanticProperties.Hint="添加自定义标签" />
+                    </Grid>
+                </VerticalStackLayout>
+
+                <!-- Notes -->
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="品鉴笔记"
+                           FontSize="14"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource TextPrimary}" />
+                    <Grid RowDefinitions="*,Auto">
+                        <Editor x:Name="NotesEditor"
+                                Text="{Binding Notes}"
+                                Placeholder="记录你的品鉴感受..."
+                                FontSize="14"
+                                HeightRequest="120"
+                                BackgroundColor="{StaticResource Surface}"
+                                Margin="0"
+                                AutomationId="NotesEditor"
+                                SemanticProperties.Hint="输入品鉴笔记" />
+                        <Button Grid.Row="1"
+                                Text="🎤"
+                                FontSize="22"
+                                WidthRequest="44"
+                                HeightRequest="44"
+                                CornerRadius="22"
+                                Padding="0"
+                                BackgroundColor="{StaticResource PrimaryLight}"
+                                TextColor="{StaticResource Primary}"
+                                HorizontalOptions="End"
+                                VerticalOptions="End"
+                                Margin="0,0,4,4"
+                                Command="{Binding VoiceInputCommand}"
+                                AutomationId="VoiceInputButton"
+                                SemanticProperties.Hint="语音输入笔记" />
+                    </Grid>
+                </VerticalStackLayout>
+
+                <!-- Location -->
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="品鉴地点"
+                           FontSize="14"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource TextPrimary}" />
+
+                    <Grid ColumnDefinitions="*,Auto"
+                          ColumnSpacing="8">
+                        <Entry x:Name="LocationEntry"
+                               Text="{Binding LocationName}"
+                               Placeholder="输入地点名称"
+                               FontSize="14"
+                               BackgroundColor="{StaticResource Surface}"
+                               AutomationId="LocationEntry"
+                               SemanticProperties.Hint="输入品鉴地点" />
+                        <Button Grid.Column="1"
+                                Text="📍 定位"
+                                FontSize="13"
+                                Padding="12,8"
+                                BackgroundColor="{StaticResource PrimaryLight}"
+                                TextColor="{StaticResource Primary}"
+                                CornerRadius="10"
+                                Command="{Binding GetLocationCommand}"
+                                AutomationId="GetLocationButton"
+                                SemanticProperties.Hint="自动获取当前位置" />
+                    </Grid>
+
+                    <Label Text="{Binding LocationStatus}"
+                           FontSize="12"
+                           TextColor="{StaticResource TextSecondary}"
+                           IsVisible="{Binding HasLocationStatus}"
+                           Margin="0,2,0,0" />
+                </VerticalStackLayout>
+
+                <!-- Spacer for bottom buttons -->
+                <BoxView HeightRequest="20"
+                         BackgroundColor="Transparent" />
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Bottom Buttons -->
+        <Border Grid.Row="1"
+                BackgroundColor="{StaticResource Surface}"
+                StrokeShape="RoundRectangle 20,20,0,0"
+                Padding="20,12,20,20"
+                HorizontalOptions="Fill">
+            <Grid ColumnDefinitions="*,*"
+                  ColumnSpacing="12">
+                <Button x:Name="CancelButton"
+                        Text="取消"
+                        FontSize="16"
+                        TextColor="{StaticResource TextSecondary}"
+                        BackgroundColor="{StaticResource PrimaryLight}"
+                        CornerRadius="25"
+                        HeightRequest="50"
+                        Command="{Binding CancelCommand}"
+                        AutomationId="CancelButton"
+                        SemanticProperties.Hint="取消编辑" />
+                <Button x:Name="SaveButton"
+                        Grid.Column="1"
+                        Text="保存"
+                        FontSize="16"
+                        FontAttributes="Bold"
+                        TextColor="{StaticResource Surface}"
+                        BackgroundColor="{StaticResource Primary}"
+                        CornerRadius="25"
+                        HeightRequest="50"
+                        Command="{Binding SaveCommand}"
+                        AutomationId="SaveButton"
+                        SemanticProperties.Hint="保存品鉴记录" />
+            </Grid>
+        </Border>
+    </Grid>
+</ContentPage>

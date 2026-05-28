@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="TasteNote.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:TasteNote.Views"
+    Title="TasteNote"
+    Shell.NavBarIsVisible="False">
+
+    <TabBar>
+        <Tab Title="发现" Icon="tab_discover.svg">
+            <ShellContent ContentTemplate="{DataTemplate views:DiscoveryPage}" Route="discover" />
+        </Tab>
+        <Tab Title="笔记" Icon="tab_journal.svg">
+            <ShellContent ContentTemplate="{DataTemplate views:JournalListPage}" Route="journal" />
+        </Tab>
+        <Tab Title="百科" Icon="tab_wiki.svg">
+            <ShellContent ContentTemplate="{DataTemplate views:EncyclopediaPage}" Route="encyclopedia" />
+        </Tab>
+        <Tab Title="地图" Icon="tab_map.svg">
+            <ShellContent ContentTemplate="{DataTemplate views:MapPage}" Route="map" />
+        </Tab>
+        <Tab Title="我的" Icon="tab_profile.svg">
+            <ShellContent ContentTemplate="{DataTemplate views:ProfilePage}" Route="profile" />
+        </Tab>
+    </TabBar>
+
+</Shell>

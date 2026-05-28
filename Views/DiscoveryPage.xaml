@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TasteNote.Views.DiscoveryPage"
+             xmlns:viewmodel="clr-namespace:TasteNote.ViewModels"
+             x:DataType="viewmodel:DiscoveryViewModel"
+             Title="发现"
+             BackgroundColor="{StaticResource Background}">
+
+    <RefreshView Command="{Binding LoadDataCommand}"
+                 IsRefreshing="{Binding IsRefreshing}">
+        <ScrollView>
+            <VerticalStackLayout Spacing="20"
+                                 Padding="20,16,20,100">
+
+                <!-- Greeting Header -->
+                <Grid ColumnDefinitions="*,Auto"
+                      Margin="0,8,0,0">
+                    <VerticalStackLayout Grid.Column="0">
+                        <Label Text="{Binding Greeting}"
+                               FontSize="26"
+                               FontAttributes="Bold"
+                               TextColor="{StaticResource TextPrimary}" />
+                        <Label Text="今天想探索什么美味？"
+                               FontSize="14"
+                               TextColor="{StaticResource TextSecondary}"
+                               Margin="0,4,0,0" />
+                    </VerticalStackLayout>
+
+                    <Button Grid.Column="1"
+                            Text="&#x1F4F7;"
+                            FontSize="22"
+                            BackgroundColor="{StaticResource PrimaryLight}"
+                            TextColor="{StaticResource Primary}"
+                            WidthRequest="44"
+                            HeightRequest="44"
+                            CornerRadius="22"
+                            Padding="0"
+                            Command="{Binding OpenCameraCommand}"
+                            AutomationId="CameraButton"
+                            SemanticProperties.Hint="打开相机拍照识别" />
+                </Grid>
+
+                <!-- Taste Radar Card -->
+                <Border BackgroundColor="{StaticResource Surface}"
+                        StrokeShape="RoundRectangle 16"
+                        StrokeThickness="0"
+                        Padding="20">
+                    <Border.Shadow>
+                        <Shadow Brush="{StaticResource TextSecondary}"
+                                Offset="0,4"
+                                Radius="16"
+                                Opacity="0.12" />
+                    </Border.Shadow>
+
+                    <VerticalStackLayout Spacing="16">
+                        <Label Text="我的口味"
+                               FontSize="20"
+                               FontAttributes="Bold"
+                               TextColor="{StaticResource TextPrimary}" />
+
+                        <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto"
+                              ColumnDefinitions="40,*,40"
+                              RowSpacing="10">
+                            <Label Grid.Row="0" Text="甜" FontSize="14" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" VerticalOptions="Center" />
+                            <ProgressBar Grid.Row="0" Grid.Column="1" Progress="{Binding Sweetness}" ProgressColor="#FFB6C1" VerticalOptions="Center" HeightRequest="8" />
+                            <Label Grid.Row="0" Grid.Column="2" Text="{Binding SweetnessText}" FontSize="12" TextColor="{StaticResource TextSecondary}" HorizontalOptions="Center" VerticalOptions="Center" />
+
+                            <Label Grid.Row="1" Text="酸" FontSize="14" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" VerticalOptions="Center" />
+                            <ProgressBar Grid.Row="1" Grid.Column="1" Progress="{Binding Sourness}" ProgressColor="#FFFACD" VerticalOptions="Center" HeightRequest="8" />
+                            <Label Grid.Row="1" Grid.Column="2" Text="{Binding SournessText}" FontSize="12" TextColor="{StaticResource TextSecondary}" HorizontalOptions="Center" VerticalOptions="Center" />
+
+                            <Label Grid.Row="2" Text="苦" FontSize="14" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" VerticalOptions="Center" />
+                            <ProgressBar Grid.Row="2" Grid.Column="1" Progress="{Binding Bitterness}" ProgressColor="#D2B48C" VerticalOptions="Center" HeightRequest="8" />
+                            <Label Grid.Row="2" Grid.Column="2" Text="{Binding BitternessText}" FontSize="12" TextColor="{StaticResource TextSecondary}" HorizontalOptions="Center" VerticalOptions="Center" />
+
+                            <Label Grid.Row="3" Text="咸" FontSize="14" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" VerticalOptions="Center" />
+                            <ProgressBar Grid.Row="3" Grid.Column="1" Progress="{Binding Aroma}" ProgressColor="#ADD8E6" VerticalOptions="Center" HeightRequest="8" />
+                            <Label Grid.Row="3" Grid.Column="2" Text="{Binding AromaText}" FontSize="12" TextColor="{StaticResource TextSecondary}" HorizontalOptions="Center" VerticalOptions="Center" />
+
+                            <Label Grid.Row="4" Text="鲜" FontSize="14" TextColor="{StaticResource TextPrimary}" HorizontalOptions="Center" VerticalOptions="Center" />
+                            <ProgressBar Grid.Row="4" Grid.Column="1" Progress="{Binding Body}" ProgressColor="#90EE90" VerticalOptions="Center" HeightRequest="8" />
+                            <Label Grid.Row="4" Grid.Column="2" Text="{Binding BodyText}" FontSize="12" TextColor="{StaticResource TextSecondary}" HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Grid>
+
+                        <Label Text="{Binding RadarRecordCount}"
+                               FontSize="12"
+                               TextColor="{StaticResource TextSecondary}"
+                               HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Today's Recommendations -->
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="今日推荐"
+                           FontSize="20"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource TextPrimary}"
+                           Margin="0,4,0,0" />
+
+                    <ScrollView Orientation="Horizontal">
+                        <HorizontalStackLayout Spacing="12"
+                                               BindableLayout.ItemsSource="{Binding Recommendations}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="{x:Null}">
+                                    <Border BackgroundColor="{StaticResource Surface}"
+                                            StrokeShape="RoundRectangle 12"
+                                            StrokeThickness="0"
+                                            WidthRequest="150"
+                                            Padding="0">
+                                        <Border.Shadow>
+                                            <Shadow Brush="{StaticResource TextSecondary}"
+                                                    Offset="0,2"
+                                                    Radius="8"
+                                                    Opacity="0.1" />
+                                        </Border.Shadow>
+
+                                        <VerticalStackLayout>
+                                            <Border StrokeShape="RoundRectangle 12,12,0,0"
+                                                    BackgroundColor="{StaticResource PrimaryLight}"
+                                                    HeightRequest="100"
+                                                    HorizontalOptions="Fill">
+                                                <Image Source="{Binding ImagePath}"
+                                                       Aspect="AspectFill"
+                                                       HorizontalOptions="Fill"
+                                                       VerticalOptions="Fill" />
+                                            </Border>
+
+                                            <VerticalStackLayout Padding="10,8,10,10" Spacing="4">
+                                                <Label Text="{Binding Name}"
+                                                       FontSize="14"
+                                                       FontAttributes="Bold"
+                                                       TextColor="{StaticResource TextPrimary}"
+                                                       LineBreakMode="TailTruncation" />
+                                                <Label Text="{Binding Category}"
+                                                       FontSize="12"
+                                                       TextColor="{StaticResource TextSecondary}" />
+                                            </VerticalStackLayout>
+                                        </VerticalStackLayout>
+
+                                        <Border.GestureRecognizers>
+                                            <TapGestureRecognizer
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:DiscoveryViewModel}}, Path=OpenRecommendationCommand}"
+                                                CommandParameter="{Binding .}" />
+                                        </Border.GestureRecognizers>
+                                    </Border>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </HorizontalStackLayout>
+                    </ScrollView>
+                </VerticalStackLayout>
+
+                <!-- Quick Actions -->
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="快捷功能"
+                           FontSize="20"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource TextPrimary}"
+                           Margin="0,4,0,0" />
+
+                    <Grid ColumnDefinitions="*,*,*,*"
+                          ColumnSpacing="12"
+                          RowSpacing="12">
+                        <!-- 摇一摇发现 -->
+                        <Border Grid.Column="0"
+                                BackgroundColor="{StaticResource Surface}"
+                                StrokeShape="RoundRectangle 14"
+                                StrokeThickness="0"
+                                Padding="12,16">
+                            <Border.Shadow>
+                                <Shadow Brush="{StaticResource TextSecondary}"
+                                        Offset="0,2"
+                                        Radius="6"
+                                        Opacity="0.08" />
+                            </Border.Shadow>
+                            <VerticalStackLayout Spacing="8"
+                                                 HorizontalOptions="Center">
+                                <Border BackgroundColor="{StaticResource PrimaryLight}"
+                                        StrokeShape="RoundRectangle 20"
+                                        WidthRequest="40"
+                                        HeightRequest="40"
+                                        HorizontalOptions="Center">
+                                    <Label Text="&#x1F500;"
+                                           FontSize="20"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center" />
+                                </Border>
+                                <Label Text="摇一摇"
+                                       FontSize="11"
+                                       TextColor="{StaticResource TextPrimary}"
+                                       HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ShakeDiscoverCommand}" />
+                            </Border.GestureRecognizers>
+                        </Border>
+
+                        <!-- 拍照识别 -->
+                        <Border Grid.Column="1"
+                                BackgroundColor="{StaticResource Surface}"
+                                StrokeShape="RoundRectangle 14"
+                                StrokeThickness="0"
+                                Padding="12,16">
+                            <Border.Shadow>
+                                <Shadow Brush="{StaticResource TextSecondary}"
+                                        Offset="0,2"
+                                        Radius="6"
+                                        Opacity="0.08" />
+                            </Border.Shadow>
+                            <VerticalStackLayout Spacing="8"
+                                                 HorizontalOptions="Center">
+                                <Border BackgroundColor="{StaticResource PrimaryLight}"
+                                        StrokeShape="RoundRectangle 20"
+                                        WidthRequest="40"
+                                        HeightRequest="40"
+                                        HorizontalOptions="Center">
+                                    <Label Text="&#x1F4F8;"
+                                           FontSize="20"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center" />
+                                </Border>
+                                <Label Text="拍照识别"
+                                       FontSize="11"
+                                       TextColor="{StaticResource TextPrimary}"
+                                       HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding PhotoRecognizeCommand}" />
+                            </Border.GestureRecognizers>
+                        </Border>
+
+                        <!-- 附近店铺 -->
+                        <Border Grid.Column="2"
+                                BackgroundColor="{StaticResource Surface}"
+                                StrokeShape="RoundRectangle 14"
+                                StrokeThickness="0"
+                                Padding="12,16">
+                            <Border.Shadow>
+                                <Shadow Brush="{StaticResource TextSecondary}"
+                                        Offset="0,2"
+                                        Radius="6"
+                                        Opacity="0.08" />
+                            </Border.Shadow>
+                            <VerticalStackLayout Spacing="8"
+                                                 HorizontalOptions="Center">
+                                <Border BackgroundColor="{StaticResource PrimaryLight}"
+                                        StrokeShape="RoundRectangle 20"
+                                        WidthRequest="40"
+                                        HeightRequest="40"
+                                        HorizontalOptions="Center">
+                                    <Label Text="&#x1F4CD;"
+                                           FontSize="20"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center" />
+                                </Border>
+                                <Label Text="附近店铺"
+                                       FontSize="11"
+                                       TextColor="{StaticResource TextPrimary}"
+                                       HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding NearbyShopsCommand}" />
+                            </Border.GestureRecognizers>
+                        </Border>
+
+                        <!-- 更多功能 -->
+                        <Border Grid.Column="3"
+                                BackgroundColor="{StaticResource Surface}"
+                                StrokeShape="RoundRectangle 14"
+                                StrokeThickness="0"
+                                Padding="12,16">
+                            <Border.Shadow>
+                                <Shadow Brush="{StaticResource TextSecondary}"
+                                        Offset="0,2"
+                                        Radius="6"
+                                        Opacity="0.08" />
+                            </Border.Shadow>
+                            <VerticalStackLayout Spacing="8"
+                                                 HorizontalOptions="Center">
+                                <Border BackgroundColor="{StaticResource PrimaryLight}"
+                                        StrokeShape="RoundRectangle 20"
+                                        WidthRequest="40"
+                                        HeightRequest="40"
+                                        HorizontalOptions="Center">
+                                    <Label Text="&#x22EF;"
+                                           FontSize="22"
+                                           FontAttributes="Bold"
+                                           TextColor="{StaticResource Primary}"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center" />
+                                </Border>
+                                <Label Text="更多功能"
+                                       FontSize="11"
+                                       TextColor="{StaticResource TextPrimary}"
+                                       HorizontalOptions="Center" />
+                            </VerticalStackLayout>
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding MoreFeaturesCommand}" />
+                            </Border.GestureRecognizers>
+                        </Border>
+                    </Grid>
+                </VerticalStackLayout>
+
+            </VerticalStackLayout>
+        </ScrollView>
+    </RefreshView>
+</ContentPage>

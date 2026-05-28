@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TasteNote.Views.Controls.JournalCard"
+             x:Name="This">
+
+    <Border StrokeShape="RoundRectangle 12"
+            BackgroundColor="{StaticResource Surface}"
+            Stroke="{StaticResource Gray200}"
+            Padding="12"
+            Margin="0,4">
+        <Border.Shadow>
+            <Shadow Brush="{StaticResource Gray200}"
+                    Offset="0,2"
+                    Radius="6"
+                    Opacity="0.25" />
+        </Border.Shadow>
+
+        <SwipeView>
+            <SwipeView.Content>
+                <VerticalStackLayout Spacing="8">
+
+                    <!-- Main Content Row -->
+                    <Grid ColumnDefinitions="Auto,*,Auto"
+                          ColumnSpacing="12">
+
+                        <!-- Left Image -->
+                        <Border StrokeShape="RoundRectangle 10"
+                                WidthRequest="80"
+                                HeightRequest="80"
+                                BackgroundColor="{StaticResource Gray100}"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center">
+                            <Image Source="{Binding ImageSource, Source={x:Reference This}}"
+                                   Aspect="AspectFill"
+                                   HorizontalOptions="Fill"
+                                   VerticalOptions="Fill"
+                                   AutomationId="CardImage" />
+                        </Border>
+
+                        <!-- Center Text -->
+                        <VerticalStackLayout Grid.Column="1"
+                                             VerticalOptions="Center"
+                                             Spacing="4">
+                            <Label Text="{Binding RecordTitle, Source={x:Reference This}}"
+                                   FontSize="15"
+                                   FontAttributes="Bold"
+                                   TextColor="{StaticResource TextPrimary}"
+                                   LineBreakMode="TailTruncation" />
+                            <Label Text="{Binding LocationName, Source={x:Reference This}}"
+                                   FontSize="12"
+                                   TextColor="{StaticResource TextSecondary}"
+                                   LineBreakMode="TailTruncation" />
+                            <Label Text="{Binding CreatedDate, Source={x:Reference This}}"
+                                   FontSize="11"
+                                   TextColor="{StaticResource Gray400}" />
+                        </VerticalStackLayout>
+
+                        <!-- Right: Stars + Heart -->
+                        <VerticalStackLayout Grid.Column="2"
+                                             HorizontalOptions="End"
+                                             Spacing="4">
+                            <Label Text="{Binding Rating, Source={x:Reference This}, StringFormat='★ {0}'}"
+                                   FontSize="13"
+                                   TextColor="{StaticResource Primary}"
+                                   HorizontalOptions="End" />
+                            <Label Text="{Binding IsFavorite, Source={x:Reference This}, Converter={StaticResource BoolToFavoriteConverter}}"
+                                   FontSize="18"
+                                   TextColor="{StaticResource Accent}"
+                                   HorizontalOptions="End"
+                                   AutomationId="FavoriteIcon" />
+                        </VerticalStackLayout>
+
+                    </Grid>
+
+                    <!-- Flavor Tags -->
+                    <HorizontalStackLayout BindableLayout.ItemsSource="{Binding FlavorTags, Source={x:Reference This}}"
+                                           Spacing="6"
+                                           Margin="0,4,0,0">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="{x:Null}">
+                                <Border StrokeShape="RoundRectangle 8"
+                                        BackgroundColor="{StaticResource PrimaryLight}"
+                                        Padding="8,3">
+                                    <Label Text="{Binding .}"
+                                           FontSize="11"
+                                           TextColor="{StaticResource PrimaryDark}" />
+                                </Border>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </HorizontalStackLayout>
+
+                </VerticalStackLayout>
+            </SwipeView.Content>
+        </SwipeView>
+    </Border>
+</ContentView>

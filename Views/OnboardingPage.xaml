@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TasteNote.Views.OnboardingPage"
+             xmlns:viewmodel="clr-namespace:TasteNote.ViewModels"
+             x:DataType="viewmodel:OnboardingViewModel"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="{StaticResource Background}">
+
+    <Grid RowDefinitions="*,Auto">
+
+        <!-- Carousel Area -->
+        <CarouselView x:Name="OnboardingCarousel"
+                      ItemsSource="{Binding Steps}"
+                      CurrentItem="{Binding CurrentStep}"
+                      CurrentItemChangedCommand="{Binding StepChangedCommand}"
+                      Loop="False"
+                      IndicatorView="DotIndicator"
+                      HorizontalOptions="Fill"
+                      VerticalOptions="Fill">
+            <CarouselView.ItemTemplate>
+                <DataTemplate x:DataType="{x:Null}">
+                    <Grid RowDefinitions="2*,Auto,Auto"
+                          HorizontalOptions="Fill"
+                          VerticalOptions="Fill"
+                          Padding="40,80,40,20">
+
+                        <!-- Icon -->
+                        <Label Text="{Binding Icon}"
+                               FontSize="80"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"
+                               Margin="0,0,0,30"
+                               SemanticProperties.Description="{Binding Title}" />
+
+                        <!-- Title -->
+                        <Label Grid.Row="1"
+                               Text="{Binding Title}"
+                               FontSize="28"
+                               FontAttributes="Bold"
+                               TextColor="{StaticResource TextPrimary}"
+                               HorizontalOptions="Center"
+                               HorizontalTextAlignment="Center"
+                               Margin="0,0,0,16" />
+
+                        <!-- Description -->
+                        <Label Grid.Row="2"
+                               Text="{Binding Description}"
+                               FontSize="16"
+                               TextColor="{StaticResource TextSecondary}"
+                               HorizontalOptions="Center"
+                               HorizontalTextAlignment="Center"
+                               LineHeight="1.5"
+                               MaximumWidthRequest="320" />
+                    </Grid>
+                </DataTemplate>
+            </CarouselView.ItemTemplate>
+        </CarouselView>
+
+        <!-- Bottom Area -->
+        <Grid Grid.Row="1"
+              RowDefinitions="Auto,Auto"
+              Padding="24,0,24,40">
+
+            <!-- Dot Indicator -->
+            <HorizontalStackLayout x:Name="DotIndicator"
+                                   HorizontalOptions="Center"
+                                   Spacing="8"
+                                   Margin="0,0,0,30">
+                <Ellipse x:Name="Dot0"
+                         WidthRequest="10"
+                         HeightRequest="10"
+                         Fill="{StaticResource Primary}"
+                         AutomationId="Dot0" />
+                <Ellipse x:Name="Dot1"
+                         WidthRequest="10"
+                         HeightRequest="10"
+                         Fill="{StaticResource PrimaryLight}"
+                         AutomationId="Dot1" />
+                <Ellipse x:Name="Dot2"
+                         WidthRequest="10"
+                         HeightRequest="10"
+                         Fill="{StaticResource PrimaryLight}"
+                         AutomationId="Dot2" />
+            </HorizontalStackLayout>
+
+            <!-- Buttons Row -->
+            <Grid Grid.Row="1"
+                  ColumnDefinitions="*,*">
+                <!-- Skip Button -->
+                <Button x:Name="SkipButton"
+                        Text="跳过"
+                        FontSize="16"
+                        TextColor="{StaticResource TextSecondary}"
+                        BackgroundColor="Transparent"
+                        Command="{Binding SkipCommand}"
+                        HorizontalOptions="Start"
+                        Margin="0,0,20,0"
+                        AutomationId="SkipButton"
+                        SemanticProperties.Hint="跳过引导页面" />
+
+                <!-- Next / Start Button -->
+                <Button x:Name="NextButton"
+                        Grid.Column="1"
+                        Text="下一步"
+                        FontSize="16"
+                        FontAttributes="Bold"
+                        TextColor="{StaticResource Surface}"
+                        BackgroundColor="{StaticResource Primary}"
+                        Command="{Binding NextCommand}"
+                        HorizontalOptions="End"
+                        MinimumWidthRequest="120"
+                        AutomationId="NextButton"
+                        SemanticProperties.Hint="进入下一步" />
+            </Grid>
+        </Grid>
+    </Grid>
+</ContentPage>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TasteNote.Views.Controls.StatsCard"
+             x:Name="This">
+
+    <Border StrokeShape="RoundRectangle 12"
+            BackgroundColor="{StaticResource Surface}"
+            Stroke="{StaticResource Gray200}"
+            Padding="16"
+            Margin="0,4">
+        <Border.Shadow>
+            <Shadow Brush="{StaticResource Gray200}"
+                    Offset="0,2"
+                    Radius="8"
+                    Opacity="0.3" />
+        </Border.Shadow>
+
+        <VerticalStackLayout Spacing="12">
+            <!-- Title -->
+            <Label Text="品鉴统计"
+                   FontSize="16"
+                   FontAttributes="Bold"
+                   TextColor="{StaticResource TextPrimary}" />
+
+            <!-- Horizontal Scrollable Stats -->
+            <ScrollView Orientation="Horizontal"
+                        HorizontalOptions="Fill">
+                <HorizontalStackLayout Spacing="20"
+                                       HorizontalOptions="Center">
+
+                    <!-- Total Count -->
+                    <VerticalStackLayout HorizontalOptions="Center"
+                                         Spacing="4"
+                                         WidthRequest="60">
+                        <Label Text="{Binding TotalCount, Source={x:Reference This}}"
+                               FontSize="22"
+                               FontAttributes="Bold"
+                               TextColor="{StaticResource StatTotal}"
+                               HorizontalOptions="Center" />
+                        <Label Text="总品鉴"
+                               FontSize="10"
+                               TextColor="{StaticResource TextSecondary}"
+                               HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+
+                    <!-- Monthly Count -->
+                    <VerticalStackLayout HorizontalOptions="Center"
+                                         Spacing="4"
+                                         WidthRequest="60">
+                        <Label Text="{Binding MonthlyCount, Source={x:Reference This}}"
+                               FontSize="22"
+                               FontAttributes="Bold"
+                               TextColor="{StaticResource StatMonth}"
+                               HorizontalOptions="Center" />
+                        <Label Text="本月"
+                               FontSize="10"
+                               TextColor="{StaticResource TextSecondary}"
+                               HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+
+                    <!-- Favorite Count -->
+                    <VerticalStackLayout HorizontalOptions="Center"
+                                         Spacing="4"
+                                         WidthRequest="60">
+                        <Label Text="{Binding FavoriteCount, Source={x:Reference This}}"
+                               FontSize="22"
+                               FontAttributes="Bold"
+                               TextColor="{StaticResource StatFavorite}"
+                               HorizontalOptions="Center" />
+                        <Label Text="收藏"
+                               FontSize="10"
+                               TextColor="{StaticResource TextSecondary}"
+                               HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+
+                    <!-- Average Rating -->
+                    <VerticalStackLayout HorizontalOptions="Center"
+                                         Spacing="4"
+                                         WidthRequest="60">
+                        <Label Text="{Binding AvgRating, Source={x:Reference This}, StringFormat='{0:F1}'}"
+                               FontSize="22"
+                               FontAttributes="Bold"
+                               TextColor="{StaticResource StatRating}"
+                               HorizontalOptions="Center" />
+                        <Label Text="平均分"
+                               FontSize="10"
+                               TextColor="{StaticResource TextSecondary}"
+                               HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+
+                    <!-- Place Count -->
+                    <VerticalStackLayout HorizontalOptions="Center"
+                                         Spacing="4"
+                                         WidthRequest="60">
+                        <Label Text="{Binding PlaceCount, Source={x:Reference This}}"
+                               FontSize="22"
+                               FontAttributes="Bold"
+                               TextColor="{StaticResource StatPlace}"
+                               HorizontalOptions="Center" />
+                        <Label Text="地点"
+                               FontSize="10"
+                               TextColor="{StaticResource TextSecondary}"
+                               HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+
+                </HorizontalStackLayout>
+            </ScrollView>
+        </VerticalStackLayout>
+    </Border>
+</ContentView>

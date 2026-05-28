@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TasteNote.Views.Controls.PlaceCard"
+             x:Name="This">
+
+    <Border StrokeShape="RoundRectangle 12"
+            BackgroundColor="{StaticResource Surface}"
+            Stroke="{StaticResource Gray200}"
+            Padding="12"
+            Margin="0,4">
+        <Border.Shadow>
+            <Shadow Brush="{StaticResource Gray200}"
+                    Offset="0,2"
+                    Radius="6"
+                    Opacity="0.25" />
+        </Border.Shadow>
+
+        <Grid ColumnDefinitions="Auto,*,Auto"
+              RowDefinitions="Auto,Auto"
+              ColumnSpacing="12"
+              RowSpacing="4">
+
+            <!-- Type Icon -->
+            <Border Grid.RowSpan="2"
+                    StrokeShape="RoundRectangle 8"
+                    BackgroundColor="{StaticResource PrimaryLight}"
+                    WidthRequest="48"
+                    HeightRequest="48"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center">
+                <Label Text="{Binding Category, Source={x:Reference This}}"
+                       FontSize="12"
+                       FontAttributes="Bold"
+                       TextColor="{StaticResource PrimaryDark}"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center" />
+            </Border>
+
+            <!-- Name -->
+            <Label Grid.Column="1"
+                   Text="{Binding PlaceName, Source={x:Reference This}}"
+                   FontSize="15"
+                   FontAttributes="Bold"
+                   TextColor="{StaticResource TextPrimary}"
+                   LineBreakMode="TailTruncation" />
+
+            <!-- Address -->
+            <Label Grid.Column="1"
+                   Grid.Row="1"
+                   Text="{Binding Address, Source={x:Reference This}}"
+                   FontSize="12"
+                   TextColor="{StaticResource TextSecondary}"
+                   LineBreakMode="TailTruncation" />
+
+            <!-- Rating -->
+            <Label Grid.Column="2"
+                   Text="{Binding Rating, Source={x:Reference This}, StringFormat='★ {0}'}"
+                   FontSize="13"
+                   TextColor="{StaticResource Primary}"
+                   HorizontalOptions="End"
+                   VerticalOptions="Start" />
+
+            <!-- Coordinates -->
+            <Label Grid.Column="2"
+                   Grid.Row="1"
+                   Text="{Binding CoordinatesText, Source={x:Reference This}}"
+                   FontSize="10"
+                   FontFamily="Courier New"
+                   TextColor="{StaticResource Gray400}"
+                   LineBreakMode="TailTruncation"
+                   HorizontalOptions="End"
+                   VerticalOptions="End" />
+
+        </Grid>
+    </Border>
+</ContentView>

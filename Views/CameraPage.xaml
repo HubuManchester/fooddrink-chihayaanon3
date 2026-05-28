@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TasteNote.Views.CameraPage"
+             xmlns:viewmodel="clr-namespace:TasteNote.ViewModels"
+             x:DataType="viewmodel:CameraViewModel"
+             Title="拍照识别"
+             BackgroundColor="{StaticResource Background}">
+
+    <Grid RowDefinitions="Auto,*,Auto,Auto"
+          Padding="16,8"
+          RowSpacing="12">
+
+        <!-- Back Button -->
+        <HorizontalStackLayout>
+            <Button Text="← 返回"
+                    FontSize="14"
+                    BackgroundColor="Transparent"
+                    TextColor="{StaticResource Primary}"
+                    Command="{Binding GoBackCommand}"
+                    AutomationId="BackButton"
+                    SemanticProperties.Hint="返回上一页" />
+        </HorizontalStackLayout>
+
+        <!-- Image Area -->
+        <Border Grid.Row="1"
+                StrokeShape="RoundRectangle 16"
+                BackgroundColor="{StaticResource Gray100}"
+                Stroke="{StaticResource Gray200}"
+                HorizontalOptions="Fill"
+                VerticalOptions="Fill"
+                MinimumHeightRequest="250">
+            <Image Source="{Binding CapturedImage}"
+                   Aspect="AspectFit"
+                   HorizontalOptions="Fill"
+                   VerticalOptions="Fill"
+                   AutomationId="CapturedImage">
+                <Image.Triggers>
+                    <DataTrigger TargetType="Image"
+                                 Binding="{Binding HasResult}"
+                                 Value="false">
+                        <Setter Property="Source" Value="camera_placeholder.png" />
+                    </DataTrigger>
+                </Image.Triggers>
+            </Image>
+        </Border>
+
+        <!-- Controls Row -->
+        <HorizontalStackLayout Grid.Row="2"
+                               HorizontalOptions="Center"
+                               Spacing="16"
+                               Margin="0,8">
+            <Button Text="拍照📷"
+                    FontSize="15"
+                    Command="{Binding TakePhotoCommand}"
+                    AutomationId="TakePhotoButton"
+                    SemanticProperties.Hint="拍照" />
+            <Button Text="从相册选取🖼️"
+                    FontSize="15"
+                    BackgroundColor="{StaticResource PrimaryLight}"
+                    TextColor="{StaticResource PrimaryDark}"
+                    Command="{Binding PickPhotoCommand}"
+                    AutomationId="PickPhotoButton"
+                    SemanticProperties.Hint="从相册选取照片" />
+            <Button Text="⚡"
+                    FontSize="18"
+                    MinimumWidthRequest="48"
+                    MinimumHeightRequest="48"
+                    Padding="8"
+                    Command="{Binding ToggleFlashCommand}"
+                    AutomationId="FlashButton"
+                    SemanticProperties.Hint="切换闪光灯" />
+        </HorizontalStackLayout>
+
+        <!-- Result Area -->
+        <VerticalStackLayout Grid.Row="3"
+                             Spacing="10"
+                             IsVisible="{Binding HasResult}">
+            <Border StrokeShape="RoundRectangle 12"
+                    BackgroundColor="{StaticResource Surface}"
+                    Stroke="{StaticResource Gray200}"
+                    Padding="16">
+                <Border.Shadow>
+                    <Shadow Brush="{StaticResource Gray200}"
+                            Offset="0,2"
+                            Radius="6"
+                            Opacity="0.25" />
+                </Border.Shadow>
+                <VerticalStackLayout Spacing="8">
+                    <!-- Loading Indicator -->
+                    <ActivityIndicator IsRunning="{Binding IsProcessing}"
+                                       IsVisible="{Binding IsProcessing}"
+                                       Color="{StaticResource Primary}"
+                                       HorizontalOptions="Center" />
+
+                    <!-- Recognition Result -->
+                    <Label Text="{Binding RecognizedLabel}"
+                           FontSize="16"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource TextPrimary}"
+                           IsVisible="{Binding HasResult}" />
+
+                    <Label FontSize="14"
+                           TextColor="{StaticResource TextSecondary}"
+                           IsVisible="{Binding HasResult}">
+                        <Label.Text>
+                            <MultiBinding StringFormat="置信度: {0:P0}">
+                                <Binding Path="Confidence" />
+                            </MultiBinding>
+                        </Label.Text>
+                    </Label>
+
+                    <Label Text="{Binding MappedName}"
+                           FontSize="15"
+                           TextColor="{StaticResource Primary}"
+                           FontAttributes="Bold"
+                           IsVisible="{Binding HasResult}" />
+
+                    <!-- Action Buttons -->
+                    <Grid ColumnDefinitions="*,*"
+                          ColumnSpacing="12"
+                          Margin="0,8,0,0">
+                        <Button Text="保存为品鉴记录"
+                                FontSize="14"
+                                Command="{Binding SaveRecordCommand}"
+                                AutomationId="SaveRecordButton"
+                                SemanticProperties.Hint="保存为品鉴记录" />
+                        <Button Grid.Column="1"
+                                Text="重新识别"
+                                FontSize="14"
+                                BackgroundColor="{StaticResource Gray100}"
+                                TextColor="{StaticResource TextPrimary}"
+                                Command="{Binding RecognizeAgainCommand}"
+                                AutomationId="RecognizeAgainButton"
+                                SemanticProperties.Hint="重新识别" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+
+    </Grid>
+</ContentPage>

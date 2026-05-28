@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="TasteNote.Views.Controls.TasteRadarCard"
+             x:Name="This">
+
+    <Border StrokeShape="RoundRectangle 12"
+            BackgroundColor="{StaticResource Surface}"
+            Stroke="{StaticResource Gray200}"
+            Padding="16"
+            Margin="0,4">
+        <Border.Shadow>
+            <Shadow Brush="{StaticResource Gray200}"
+                    Offset="0,2"
+                    Radius="8"
+                    Opacity="0.3" />
+        </Border.Shadow>
+
+        <VerticalStackLayout Spacing="12">
+            <!-- Title -->
+            <Grid ColumnDefinitions="*,Auto">
+                <Label Text="我的口味"
+                       FontSize="16"
+                       FontAttributes="Bold"
+                       TextColor="{StaticResource TextPrimary}" />
+                <Label Grid.Column="1"
+                       FontSize="12"
+                       TextColor="{StaticResource TextSecondary}"
+                       VerticalOptions="Center">
+                    <Label.Text>
+                        <MultiBinding StringFormat="共 {0} 条记录">
+                            <Binding Path="TotalRecords" Source="{x:Reference This}" />
+                        </MultiBinding>
+                    </Label.Text>
+                </Label>
+            </Grid>
+
+            <!-- Sweet -->
+            <Grid ColumnDefinitions="32,*,36"
+                  ColumnSpacing="8"
+                  VerticalOptions="Center">
+                <Label Text="甜"
+                       FontSize="13"
+                       TextColor="{StaticResource TextPrimary}"
+                       VerticalOptions="Center" />
+                <ProgressBar Grid.Column="1"
+                             Progress="{Binding SweetScore, Source={x:Reference This}}"
+                             ProgressColor="{StaticResource FlavorSweet}"
+                             VerticalOptions="Center"
+                             HeightRequest="8" />
+                <Label Grid.Column="2"
+                       Text="{Binding SweetScore, Source={x:Reference This}, StringFormat='{0:F1}'}"
+                       FontSize="11"
+                       TextColor="{StaticResource TextSecondary}"
+                       VerticalOptions="Center"
+                       HorizontalOptions="End" />
+            </Grid>
+
+            <!-- Sour -->
+            <Grid ColumnDefinitions="32,*,36"
+                  ColumnSpacing="8"
+                  VerticalOptions="Center">
+                <Label Text="酸"
+                       FontSize="13"
+                       TextColor="{StaticResource TextPrimary}"
+                       VerticalOptions="Center" />
+                <ProgressBar Grid.Column="1"
+                             Progress="{Binding SourScore, Source={x:Reference This}}"
+                             ProgressColor="{StaticResource FlavorSour}"
+                             VerticalOptions="Center"
+                             HeightRequest="8" />
+                <Label Grid.Column="2"
+                       Text="{Binding SourScore, Source={x:Reference This}, StringFormat='{0:F1}'}"
+                       FontSize="11"
+                       TextColor="{StaticResource TextSecondary}"
+                       VerticalOptions="Center"
+                       HorizontalOptions="End" />
+            </Grid>
+
+            <!-- Bitter -->
+            <Grid ColumnDefinitions="32,*,36"
+                  ColumnSpacing="8"
+                  VerticalOptions="Center">
+                <Label Text="苦"
+                       FontSize="13"
+                       TextColor="{StaticResource TextPrimary}"
+                       VerticalOptions="Center" />
+                <ProgressBar Grid.Column="1"
+                             Progress="{Binding BitterScore, Source={x:Reference This}}"
+                             ProgressColor="{StaticResource FlavorBitter}"
+                             VerticalOptions="Center"
+                             HeightRequest="8" />
+                <Label Grid.Column="2"
+                       Text="{Binding BitterScore, Source={x:Reference This}, StringFormat='{0:F1}'}"
+                       FontSize="11"
+                       TextColor="{StaticResource TextSecondary}"
+                       VerticalOptions="Center"
+                       HorizontalOptions="End" />
+            </Grid>
+
+            <!-- Salty -->
+            <Grid ColumnDefinitions="32,*,36"
+                  ColumnSpacing="8"
+                  VerticalOptions="Center">
+                <Label Text="咸"
+                       FontSize="13"
+                       TextColor="{StaticResource TextPrimary}"
+                       VerticalOptions="Center" />
+                <ProgressBar Grid.Column="1"
+                             Progress="{Binding SaltyScore, Source={x:Reference This}}"
+                             ProgressColor="{StaticResource FlavorSalty}"
+                             VerticalOptions="Center"
+                             HeightRequest="8" />
+                <Label Grid.Column="2"
+                       Text="{Binding SaltyScore, Source={x:Reference This}, StringFormat='{0:F1}'}"
+                       FontSize="11"
+                       TextColor="{StaticResource TextSecondary}"
+                       VerticalOptions="Center"
+                       HorizontalOptions="End" />
+            </Grid>
+
+            <!-- Umami -->
+            <Grid ColumnDefinitions="32,*,36"
+                  ColumnSpacing="8"
+                  VerticalOptions="Center">
+                <Label Text="鲜"
+                       FontSize="13"
+                       TextColor="{StaticResource TextPrimary}"
+                       VerticalOptions="Center" />
+                <ProgressBar Grid.Column="1"
+                             Progress="{Binding UmamiScore, Source={x:Reference This}}"
+                             ProgressColor="{StaticResource FlavorUmami}"
+                             VerticalOptions="Center"
+                             HeightRequest="8" />
+                <Label Grid.Column="2"
+                       Text="{Binding UmamiScore, Source={x:Reference This}, StringFormat='{0:F1}'}"
+                       FontSize="11"
+                       TextColor="{StaticResource TextSecondary}"
+                       VerticalOptions="Center"
+                       HorizontalOptions="End" />
+            </Grid>
+
+        </VerticalStackLayout>
+    </Border>
+</ContentView>
